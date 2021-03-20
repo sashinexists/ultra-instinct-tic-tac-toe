@@ -1,5 +1,5 @@
 enum square {
-    blank= '🧘',
+    blank= ' ',
     x ='×',
     o= '○'
 }

@@ -3,7 +3,7 @@ import square from '../shared/square'
 import activeState from '../shared/activeState'
 import Board from './Board'
 import { Move, makeMove } from '../shared/Move'
-import '../styles/app.css'
+import '../styles/built/app.css'
 
 const initialState = (): Array<Array<square>> =>
   new Array(9).fill([]).map((board) => {
@@ -105,13 +105,16 @@ function App() {
   return (
     <div className="game">
       {calculateCurrentState().map((board, i) => {
+        const winner:square =checkBoardWin(i);
+        const activeBoard:activeState = getActiveBoard();
         return (
           <Board
             key={i}
             position={i}
             board={board}
-            isActive={i === getActiveBoard() || activeState["all"] === getActiveBoard()}
-            winner={checkBoardWin(i)}
+            winner={winner}
+            isActive={(i === activeBoard || activeState["all"] === activeBoard) 
+            && winner===square["blank"]}
             takeTurn={takeTurn}
           />
         )
