@@ -61,8 +61,8 @@ function App() {
       return activeState['all']
     }
   }
-
-  function checkGameWin() {
+/*
+  function checkGameWin() { // finish this function boy!
     //work to do here
     const winStates = [
       [0, 1, 2],
@@ -90,7 +90,7 @@ function App() {
       })
       return finishedGames
     }, [])
-  }
+  }*/
 
   function calculateCurrentState(): Array<Array<square>> {
     let startingGame: Array<Array<square>> = initialState()
