@@ -3,4 +3,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     place-items: center;
+    background-color: #EEEEE8;
+    border-radius: 5px;
+    grid-gap: 2px;
 }
