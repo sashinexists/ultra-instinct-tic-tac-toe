@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import square from '../shared/square'
+import activeState from '../shared/activeState'
 import Board from './Board'
 import { Move, makeMove } from '../shared/Move'
 import '../styles/app.css'
@@ -19,28 +20,45 @@ function App() {
   function checkBoardWin(board:number):square {
     const winStates = [[0,1,2],[3,4,5],[6,7,8],[0,3,5],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     const currentBoard =calculateCurrentState()[board];
+    let winner:square = square["blank"];
     winStates.forEach((winState) => {
       if(currentBoard[winState[0]]===currentBoard[winState[1]]
         &&currentBoard[winState[1]]===currentBoard[winState[2]]
-        &&currentBoard[winState[1]]!==square['blank']) {
-          return currentBoard[winState[0]];
+        &&currentBoard[winState[2]]!==square['blank']) {
+          winner = currentBoard[winState[0]];
         }
     })
-    return square["blank"];
+    return winner;
   }
 
-  function getActiveBoard() {
-    //I liked that enum from before
+  function getActiveBoard():activeState {
+    if(game.length>0 && checkBoardWin(game[game.length-1].position)===square['blank']) {
+      return game[game.length-1].position;
+    } else {
+      return activeState["all"];
+    }
   }
 
-  function checkGameWin() {
+  function checkGameWin() {//work to do here
     const winStates = [[0,1,2],[3,4,5],[6,7,8],[0,3,5],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     //reduce all boards with checkboardwin function to a winning boards then do the same winstates for each on this
+    const gameOvers = game.reduce((finishedGames:Array<number>,turn)=> {
+      const currentBoard =calculateCurrentState()[turn.board];
+      winStates.forEach((winState) => {
+        if(currentBoard[winState[0]]===currentBoard[winState[1]]
+          &&currentBoard[winState[1]]===currentBoard[winState[2]]
+          &&currentBoard[winState[1]]!==square['blank']) {
+            finishedGames = [...finishedGames, turn.board];
+          } else {
+            finishedGames = [...finishedGames]
+          }
+      })
+      return finishedGames;
+    },[])
   }
 
   function calculateCurrentState(): Array<Array<square>> {
     let startingGame: Array<Array<square>> = initialState()
-    console.log(startingGame)
     return game.reduce((gameState, move) => {
       gameState[move.board][move.position] = move.isXTurn
         ? square['x']
@@ -52,7 +70,7 @@ function App() {
   return (
     <div className="game">
       {calculateCurrentState().map((board, i) => {
-        return <Board position={i} board={board} takeTurn={takeTurn} />
+        return <Board key={i} position={i} board={board} isActive={i===getActiveBoard()} winner={checkBoardWin(i)} takeTurn={takeTurn} />
       })}
     </div>
   )
