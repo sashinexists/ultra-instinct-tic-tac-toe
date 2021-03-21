@@ -18,6 +18,8 @@
 .square-symbol {
   text-align: center;
   background: inherit;
+  font-family: $square-symbol-font;
+  font-size: $square-symbol-font-size;
 }
 
 .square-symbol__○ {

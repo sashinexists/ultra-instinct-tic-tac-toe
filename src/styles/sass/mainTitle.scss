@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.main-title {
+    padding-bottom: 2rem;
+    font-size: 3rem;
+    font-weight: 300;
+    .main-title__squared {
+        text-transform: uppercase;
+        font-size: 1.5rem;
+    }
+}
