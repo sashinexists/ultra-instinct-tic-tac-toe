@@ -21,9 +21,9 @@ export default function Turn(props: Props) {
     );
   } else {
     return (
-      <section className={`info-box winner winner__${value}`}>
+      <section className={`info-box winner winner__${winner}`}>
         <p>
-          <span className={`winner-symbol winner-symbol__${value}`}>
+          <span className={`winner-symbol winner-symbol__${winner}`}>
             {value}
           </span>
          wins!
